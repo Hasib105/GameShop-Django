@@ -48,8 +48,22 @@ def payment_process(request):
 
 
 def payment_completed(request):
+    order_id = request.session.get('order_id', None)
+    order = get_object_or_404(Order, id=order_id)
+    
+    # Update order status to 'completed'
+    order.status = 'complete'
+    order.save()
+
     return render(request, 'completed.html')
 
 
 def payment_canceled(request):
+    order_id = request.session.get('order_id', None)
+    order = get_object_or_404(Order, id=order_id)
+    
+    # Update order status to 'cancel'
+    order.status = 'cancel'
+    order.save()
+
     return render(request, 'canceled.html')

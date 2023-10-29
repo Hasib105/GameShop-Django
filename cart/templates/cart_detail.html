@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+<!---->
+{% block body %}<!---->
+{% if cart_items %}
+<div class="container mx-auto mt-5">
+  <table class="w-full border border-gray-300">
+    <thead>
+      <tr>
+        <th class="py-2 border-b text-center">Name</th>
+        <th class="py-2 border-b text-center">Quantity</th>
+        <th class="py-2 border-b text-center">Price</th>
+        <th class="py-2 border-b text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Cart items loop -->
+      {% for item in cart_items %}
+      <tr>
+        <td class="py-2 border-b text-center">{{ item.product.name }}</td>
+        <td class="py-2 border-b text-center">
+          <a
+            href="{% url 'decrement' item.id %}"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+            >-</a
+          >
+          <input
+            type="number"
+            class="w-16 py-1 px-2 border border-gray-300 rounded"
+            value="{{ item.quantity }}"
+          />
+          <a
+            href="{% url 'increment' item.id %}"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+            >+</a
+          >
+        </td>
+        <td class="py-2 border-b text-center">${{ item.total_cost }}</td>
+        <td class="py-2 border-b text-center">
+          <a
+            href="{% url 'remove_cart' item.id %}"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >Remove Item</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="mt-4 text-right font-bold text-xl">
+    Total Price: ${{ total_price }}
+  </p>
+
+  <div class="flex justify-between mt-4">
+    <a
+      href="{% url 'clear' %}"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Clear Cart
+    </a>
+    <a
+      href="{% url 'create_order' %}"
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Order Now
+    </a>
+  </div>
+</div>
+
+{% else %}
+<p>Your Cart is Empty</p>
+{% endif %}
+
+<!---->
+
+{% endblock %}

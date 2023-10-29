@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+<!---->
+{% block body %}
+
+<div class="container mx-auto mt-5">
+  <table class="w-full border border-gray-300">
+    <thead>
+      <tr>
+        <th class="py-2 border-b text-center">Name</th>
+        <th class="py-2 border-b text-center">Quantity</th>
+        <th class="py-2 border-b text-center">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Cart items loop -->
+      {% for item in cart_items %}
+      <tr>
+        <td class="py-2 border-b text-center">{{ item.product.name }}</td>
+        <td class="py-2 border-b text-center">{{ item.quantity }}</td>
+        <td class="py-2 border-b text-center">${{ item.total_cost }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="mt-4 text-right font-semibold text-xl">
+    Total Price: ${{ total_price }}
+  </p>
+</div>
+
+<div class="max-w-md mx-auto bg-white p-8 rounded shadow-md mt-5">
+  <h2 class="text-2xl mb-6">Checkout Form</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <!----->
+
+    {{form.as_p}}
+
+    <div class="flex justify-between items-center mt-3">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

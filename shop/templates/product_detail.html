@@ -6,15 +6,42 @@
     <div>
       <img src="{{ product.image.url }}" alt="{{ product.name }}" class="rounded-lg">
     </div>
-    <div>
-      <h1 class="text-2xl font-bold">{{ product.name }}</h1>
-      <p class="mt-4">{{ product.description }}</p>
-      <p class="mt-2 text-gray-600">Price: ${{ product.price }}</p>
-      <p class="mt-2 text-gray-600">Category: {{ product.category.name }}</p>
-      <form action="{% url 'add_to_cart' product.id %}">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 w-full"> Add to Cart</button>
+    <div class="flex flex-col justify-between">
+      <div class="gap-2">
+        <h1 class="text-2xl font-bold">{{ product.name }}</h1>
+        <p class="mt-2 text-white bg-green-500 rounded py-1 px-3 inline">${{ product.price }}</p>
+        <p class="mt-2 text-gray-600">Category: {{ product.category.name }}</p>
+      </div>
+      <form action="{% url 'add_to_cart' product.id %}" class="inline">
+        <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4">Add to Cart</button>
       </form>
     </div>
+  </div>
+  <div class="mt-4">
+    <h1 class="font-bold text-xl mb-8">Product Description</h1>
+    <p class="rounded-lg">{{ product.description }}</p>
+  </div>
+</div>
+<!-- Related Products -->
+
+<div class="mx-auto max-w-3xl text-center">
+  <h1 class="font-bold text-3xl mb-8">Related Products</h1>
+
+  <div class="flex ">
+    {% for product in related_products %}
+      <a href="{% url 'product_detail' product.id %}" class="flex flex-col bg-white rounded-lg shadow-md p-4 hover:bg-blue-200 transition duration-100 w-full">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mt-2">
+
+        <div class="justify-between items-center mt-2">
+          <h2 class=" text-lg font-semibold">{{ product.name }}</h2>
+          <p class=" text-white bg-green-500 rounded py-1 px-3 inline">${{ product.price }}</p>
+        </div>
+
+        <form action="{% url 'add_to_cart' product.id %}" class=" mt-2 inline h-full flex justify-center items-center">
+      <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Add to Cart</button>
+    </form>
+      </a>
+    {% endfor %}
   </div>
 </div>
 

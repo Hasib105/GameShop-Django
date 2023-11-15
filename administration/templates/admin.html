@@ -9,11 +9,16 @@
   <div class="flex">
     <div class="bg-gray-800 w-64 h-screen">
       <ul class="py-4">
+
+        <li class="p-4 hover:bg-gray-700">
+          <a href="/" class="text-white font-semibold">Home</a>
+        </li>
+
         <li class="p-4 hover:bg-gray-700">
           <a href="{% url 'dashboard' %}" class="text-white font-semibold">Dashboard</a>
         </li>
         <li class="p-4 hover:bg-gray-700">
-          <a href="#" class="text-white font-semibold">Orders</a>
+          <a href="{% url 'order-list' %}" class="text-white font-semibold">Orders</a>
         </li>
         
 

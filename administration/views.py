@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from shop.models import Product , Category
-from orders.models import Order
+from orders.models import Order , OrderItem
 from .forms import ProductForm, CategoryForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -8,13 +8,14 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard(request):
     product = Product.objects.count()
-    #orders = Order.objects.filter(status='complete').count()
+    order_items = OrderItem.objects.filter(order__status='complete')
+    total_cost = sum(item.get_cost() for item in order_items)
     orders = Order.objects.count()
     #earn = sum(item.get_cost() for order in orders for item in order.items.all())
     return render(request, 'admin/dashboard.html',{
         'product':product,
         'orders': orders,
-        #'earn': earn
+        'total_cost':total_cost
         
     })
 

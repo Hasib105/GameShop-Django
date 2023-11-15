@@ -32,5 +32,3 @@ def category_detail(request, category_id):
 
 
 
-def dashboard(request):
-    return render(request, 'admin/dashboard.html')
